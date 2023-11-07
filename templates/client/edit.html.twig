@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Client{% endblock %}
+
+{% block body %}
+<div>
+    <h1>Modifier {{ client.nom }}</h1>
+
+    {{ include('client/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('client_index') }}">back to list</a>
+
+</div>
+{% endblock %}
