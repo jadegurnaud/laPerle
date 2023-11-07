@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	
+
+	<div class="example-wrapper">
+		<table>
+			<caption>Listes des produits</caption>
+			<button onclick="location.href='{{ path('produit_add') }}'">Ajouter</button>
+			<thead>
+				<tr>
+					<th>Nom du produit</th>
+					<th>Produit Description</th>
+					<th>Prix</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for produit in produits %}
+					<tr>
+						<td>{{ produit.produitTypeLibelle.libelle }}</td>
+						<td>{{ produit.description }}</td>
+
+						<td>{{ produit.prix }}€</td>
+						<td>
+
+							<button onclick="location.href='{{ path('produit_update', {id: produit.id}) }}'">Modifier</button>
+							<button onclick="deleteProduit({{ produit.id }})">Supprimer</button>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<script>
+		// post delete request
+function deleteProduit(id) {
+var url = "{{ path('produit_delete', {id: 0}) }}";
+url = url.replace("0", id);
+var xhr = new XMLHttpRequest();
+xhr.open("DELETE", url, true); // Change "POST" to "DELETE"
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send();
+xhr.onload = function () {
+if (xhr.status == 200) {
+console.log(xhr.responseText);
+location.reload(); // Reload the page to reflect the changes
+}
+}
+}
+console.log({{ produits|json_encode()|raw }});
+	</script>
+{% endblock %}
