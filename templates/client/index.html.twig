@@ -5,35 +5,39 @@
 {% block body %}
 
 <div>
+    <button id="btn-new" onclick="location.href='{{ path('client_new') }}'">Ajouter</button>
+    <h1>Liste des clients</h1>
+    
     <div>
-        <div>
-            <div>
-                <h1>Clients</h1>
-            </div>
-            <div class="text-right">
-                <a href="{{ path('client_new') }}">Create new</a>
-            </div>
-        </div>
-    </div>
-    <div>
-            <input id="inputClient" type="text" placeholder="Rechercher un client">
-            <table id="tableClient">
+        <input id="inputClient" type="text" placeholder="Rechercher un client">
+        <table id="tableClient">
             <thead>
-            <tr>
-                <th>Nom</th>
-                <th>mail</th>
-                <th>adresse</th>
-                <th></th>
-            </tr>
-        </thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Nom</th>
+                    <th>Mail</th>
+                    <th>Adresse</th>
+                    <th>Stock</th>
+                    <th>CB</th>
+                    <th></th>
+                </tr>
+            </thead>
         <tbody>
         {% for client in clients %}
             <tr>
+                {% if client.estBoutique == true %}
+                    <td>Boutique</td>
+                {% else %}
+                    <td>Restaurant</td>
+                {% endif %}
                 <td>{{ client.nom }}</td>
                 <td>{{ client.email }}</td>
                 <td>{{ client.adresse }}</td>
+                <td>{{ client.stock }}</td>
+                <td>{{ client.cb }}</td>
                 <td>
-                    <a href="{{ path('client_edit', {'id': client.id}) }}">Modifier</a>
+                    <button onclick="location.href='{{ path('client_edit', {id: client.id}) }}'">Modifier</a>
+                    <button onclick="deleteClient({{ client.id }})">Supprimer</button>
                 </td>
             </tr>
         {% else %}
@@ -42,9 +46,9 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-
-</div>
+        </table>
+    </div>
+<div>
 {% endblock %}
 {% block javascripts %}
     <!--fonction qui effectue une recherche/filtrage en temps réel sur un tableau HTML-->
@@ -58,4 +62,21 @@
             });
         });
     </script>
+    <script>
+		// post delete request
+        function deleteClient(id) {
+            var url = "{{ path('client_delete', {id: 0}) }}";
+            url = url.replace("0", id);
+            var xhr = new XMLHttpRequest();
+            xhr.open("DELETE", url, true); // Change "POST" to "DELETE"
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send();
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    console.log(xhr.responseText);
+                    location.reload(); // Reload the page to reflect the changes
+                }
+            }
+        }
+	</script>
 {% endblock %}
