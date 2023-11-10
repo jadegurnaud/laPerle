@@ -13,7 +13,7 @@ use App\Form\ClientType;
 
 class HomeController extends AbstractController
 {
-    #[Route('/accueil', name: 'accueil')]
+    #[Route('/', name: 'accueil')]
     public function index(): Response
     {
         return $this->render('home/index.html.twig', [
