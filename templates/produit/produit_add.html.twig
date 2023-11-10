@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Produit
+{% endblock %}
+
+{% block body %}
+<div class="formadd">
+		<h1>Ajout d'un Produit</h1>
+
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<button class="btn">{{ button_label|default('Sauvegarder') }}</button>
+		{{ form_end(form) }}
+
+		<a href="{{ path('produit') }}">Retour à la liste</a>
+	</div>
+{% endblock %}
