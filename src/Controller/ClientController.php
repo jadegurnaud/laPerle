@@ -61,4 +61,21 @@ class ClientController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/delete/{id}', name: 'client_delete', methods: ['DELETE'])]
+    public function delete($id): Response
+    {
+        $client = $this->entityManager->getRepository(Client::class)->find($id);
+
+        if (!$client) {
+            throw $this->createNotFoundException(
+                'No produit found for id ' . $id
+            );
+        }
+
+        $this->entityManager->remove($client);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('client_index');
+    }
 }

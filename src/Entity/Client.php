@@ -36,6 +36,15 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client_id', targetEntity: Commande::class)]
     private Collection $commandes;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $stock = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cb = null;
+
+    #[ORM\Column]
+    private ?bool $estBoutique = null;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -144,6 +153,42 @@ class Client
                 $commande->setClientId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?int $stock): static
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    public function getCb(): ?string
+    {
+        return $this->cb;
+    }
+
+    public function setCb(?string $cb): static
+    {
+        $this->cb = $cb;
+
+        return $this;
+    }
+
+    public function isEstBoutique(): ?bool
+    {
+        return $this->estBoutique;
+    }
+
+    public function setEstBoutique(bool $estBoutique): static
+    {
+        $this->estBoutique = $estBoutique;
 
         return $this;
     }
