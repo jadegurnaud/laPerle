@@ -4,10 +4,10 @@
 
 {% block body %}
 
-<div>
-    <button id="btn-new" onclick="location.href='{{ path('client_new') }}'">Ajouter</button>
+<div class="example-wrapper">
     <h1>Liste des clients</h1>
-    
+    <button id="btn-new" onclick="location.href='{{ path('client_new') }}'">Ajouter</button>
+
     <div>
         <input id="inputClient" type="text" placeholder="Rechercher un client">
         <table id="tableClient">
