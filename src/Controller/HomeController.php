@@ -14,10 +14,11 @@ use App\Form\ClientType;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'accueil')]
-    public function index(): Response
+    public function index(ClientRepository $clientRepository): Response
     {
+        $clients = $clientRepository->findAll();
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'DefaultController',
+            'clients' => 'clients',
         ]);
     }
 }
