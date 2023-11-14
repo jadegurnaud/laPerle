@@ -19,7 +19,6 @@ class ProduitNewType extends AbstractType
                 'class' => 'App\Entity\ProduitType',
                 'choice_label' => 'libelle',
             ])
-            ->add('commande')
         ;
     }
 
