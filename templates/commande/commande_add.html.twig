@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Commande
+{% endblock %}
+
+{% block body %}
+<div class="formadd">
+		<h1>Ajout d'une Commande</h1>
+
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+
+        {{ form_start(formLivraison) }}
+		{{ form_widget(formLivraison) }}
+		<button class="btn">{{ button_label|default('Sauvegarder') }}</button>
+		{{ form_end(formLivraison) }}
+        {{ form_end(form) }}
+
+		<a href="{{ path('commande') }}">Retour à la liste</a>
+	</div>
+{% endblock %}  
