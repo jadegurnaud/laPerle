@@ -18,13 +18,14 @@
 			</thead>
 			<tbody>
 				{% for commande in commandes %}
+			
 					<tr>
 						<td>{{ commande.id }}</td>
 						<td>{{ commande.client_id.nom }}</td>
 
 						<td>{{ commande.total }}€</td>
-                        <td>{{ commande.paiement.etat }}€</td>
-                        <td>{{ commande.livraison_id.etat }}€</td>
+                        <td>{{ commande.paiement.status }}</td>
+                        <td>{{ commande.livraison_id.status }}</td>
                         
 						<td>
 

@@ -35,6 +35,8 @@ class Commande
     public function __construct()
     {
         $this->produits = new ArrayCollection();
+
+        $this->livraison_id = new Livraison();
     }
 
     public function getId(): ?int
@@ -54,6 +56,11 @@ class Commande
         return $this;
     }
 
+    public function getLivraison_Id(): ?Livraison
+    {
+        return $this->livraison_id;
+    }
+
     public function getLivraisonId(): ?Livraison
     {
         return $this->livraison_id;
@@ -66,10 +73,15 @@ class Commande
         return $this;
     }
 
+    public function getClient_Id(): ?Client
+    {
+        return $this->client_id;
+    }
     public function getClientId(): ?Client
     {
         return $this->client_id;
     }
+
 
     public function setClientId(?Client $client_id): static
     {

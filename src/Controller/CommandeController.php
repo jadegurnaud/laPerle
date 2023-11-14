@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Commande;
-use App\Entity\Livraison;
+use App\Entity\Paiement;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CommandeRepository;
 use App\Repository\ClientRepository;
@@ -38,17 +38,28 @@ class CommandeController extends AbstractController
     public function add(Request $request, ClientRepository $clientRepository): Response
     {
         $commande = new Commande();
-        $form = $this->createForm(CommandeType::class, $commande);
+        $form = $this->createForm(CommandeType::class, $commande, ['isUpdate' => false]);
         $form->handleRequest($request);
 
-        $livraison = new  Livraison();
-        $formLivraison = $this->createForm(LivraisonType::class, $livraison);
-        $formLivraison->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        if ($form->isSubmitted() && $form->isValid() && $formLivraison->isSubmitted() && $formLivraison->isValid()) {
+            $selectedProducts = $form->get('produits')->getData();
+
+            foreach ($selectedProducts as $product) {
+                // Do something with each selected product, e.g., add it to the Commande entity
+                $commande->addProduit($product);
+            }
+
 
             $this->entityManager->persist($commande);
-            $this->entityManager->persist($livraison);
+            $this->entityManager->flush();
+
+            $paiement = new Paiement();
+            $paiement->setCommandeId($commande);
+            // ... (set other properties)
+
+            // Persist the Paiement entity
+            $this->entityManager->persist($paiement);
             $this->entityManager->flush();
 
             return $this->redirectToRoute('commande');
@@ -57,7 +68,6 @@ class CommandeController extends AbstractController
         $clients = $clientRepository->findAll();
         return $this->render('commande/commande_add.html.twig', [
             'form' => $form->createView(),
-            'formLivraison' => $formLivraison->createView(),
             'clients' => $clients
         ]);
     }
@@ -73,15 +83,33 @@ class CommandeController extends AbstractController
             );
         }
 
-        $form = $this->createForm(CommandeNewType::class, $commande);
+        $selectedProducts = $commande->getProduits();
+
+
+        $form = $this->createForm(CommandeType::class, $commande, [
+            'selectedProduits' => $selectedProducts,
+            'isUpdate' => true,
+            'data' => $commande,
+        ]);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+            // Update Livraison entity
+            $livraison = $form->get('livraison_id')->getData();
+            $commande->setLivraisonId($livraison);
+
+            // Update Paiement entity
+            $paiement = $form->get('paiement')->getData();
+            $commande->setPaiement($paiement);
+
+            $entityManager->persist($commande);
             $entityManager->flush();
 
             return $this->redirectToRoute('commande');
         }
-       
+
         return $this->render('commande/update.html.twig', [
             'commande' => $commande,
             'form' => $form->createView(),

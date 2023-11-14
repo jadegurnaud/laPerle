@@ -23,6 +23,13 @@ class Paiement
     #[ORM\JoinColumn(nullable: false)]
     private ?Commande $commande_id = null;
 
+    public function __construct()
+    {
+        $this->montant = 0;
+        $this->status = 'en attente';
+
+    }
+
     public function getId(): ?int
     {
         return $this->id;

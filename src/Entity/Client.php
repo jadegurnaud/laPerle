@@ -149,7 +149,7 @@ class Client
     {
         if ($this->commandes->removeElement($commande)) {
             // set the owning side to null (unless already changed)
-            if ($commande->getClientId() === $this) {
+            if ($commande->getClient_Id() === $this) {
                 $commande->setClientId(null);
             }
         }
