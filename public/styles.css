@@ -1,6 +1,9 @@
+body {
+    margin: inherit;
+}
+
 h1 {
-    font-weight: bold;
-    font-size: 25px;
+    font-size: 28px;
     text-align: center;
     position: relative;
     top: 10px;
@@ -34,7 +37,7 @@ td {
     padding: 8px;
 }
 th {
-    background-color: #4CAF50;
+    background-color: #797b84;
     color: white;
 }
 
@@ -53,7 +56,7 @@ label {
 
 /* Button styles */
 button {
-    background-color: #4CAF50;
+    background-color: #b6ae97;
     color: white;
     padding: 10px 24px;
     margin: 8px 0;
@@ -70,12 +73,6 @@ form {
     width: 400px;
     padding: 1em;
 }
-#btn-new {
-    position: absolute;
-    float: left;
-    top: 70px;
-    left: 10px;
-}
 #inputClient {
     margin-top: 30px;
 }
@@ -83,7 +80,9 @@ form {
 
 /**nav**/
 nav {
-    background-color: #4CAF50;
+    background-color: #393c44;
+    
+    margin-left: 100px;
 }
 
 nav ul {
@@ -91,20 +90,25 @@ nav ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    text-align: center;
 }
 
 nav li {
-    float: left;
+    display: inline-block;
 }
 
 nav li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 41px 4vw;
     text-decoration: none;
 }
 
 nav li a:hover {
-    background-color: #111;
+    background-color: #797b84;
+}
+.img-laPerle {
+    position: absolute;
+    float: left;
 }

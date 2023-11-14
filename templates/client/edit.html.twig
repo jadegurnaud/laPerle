@@ -3,12 +3,12 @@
 {% block title %}Modifier Client{% endblock %}
 
 {% block body %}
-<div>
+<div class="formadd">
     <h1>Modifier {{ client.nom }}</h1>
 
     {{ include('client/_form.html.twig', {'button_label': 'Modifier'}) }}
-
-    <a href="{{ path('client_index') }}">back to list</a>
+    
+    <button onclick="location.href='{{ path('client_index') }}'">Retour</button>
 
 </div>
 {% endblock %}
